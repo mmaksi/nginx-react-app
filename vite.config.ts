@@ -10,4 +10,10 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
   },
+  server: {
+    port: 4000,
+    strictPort: true,
+    host: true,
+    origin: 'http://0.0.0.0:8080',
+  },
 })
