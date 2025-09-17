@@ -8,7 +8,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t mmaksi/react-nginx -f Dockerfile.dev .
-      - run: docker run -e CI=true mmaksi/react-nginx npm run test
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t mmaksi/react-nginx -f Dockerfile.dev .
+
+      - name: Run tests in container
+        run: docker run -e CI=true mmaksi/react-nginx npm run test
