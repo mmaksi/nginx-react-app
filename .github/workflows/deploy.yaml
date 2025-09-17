@@ -1,0 +1,14 @@
+name: Deploy Frontend
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t mmaksi/react-nginx -f Dockerfile.dev .
+      - run: docker run -e CI=true mmaksi/react-nginx npm run test

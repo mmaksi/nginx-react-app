@@ -37,8 +37,8 @@ describe('App Integration Tests', () => {
   it('renders all elements together correctly', () => {
     render(<App />)
     
-    // Check that all main elements are present
-    expect(screen.getByText('Vite + React')).toBeInTheDocument()
+    // Check that all main elements are present - use role to target specific heading
+    expect(screen.getByRole('heading', { name: /Vite.*React/ })).toBeInTheDocument()
     expect(screen.getByAltText('Vite logo')).toBeInTheDocument()
     expect(screen.getByAltText('React logo')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /count is 0/i })).toBeInTheDocument()
